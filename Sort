@@ -93,3 +93,31 @@ for x in range(len(a)):
 
 #### MERGE_SORT ####
 separate list into two sub-list, sorted sublist inside first, then merge sublist by one-by-one checking into final order
+def mergesort(alist):
+    if len(alist)>1:
+        L=alist[:len(alist)//2]
+        R=alist[len(alist)//2:]
+        
+        #recursion
+        mergesort(L)
+        mergesort(R)
+        
+        i=j=k=0
+        
+        while i < len(L) and j < len(R):
+            if L[i]< R[j]:
+                alist[k]=L[i]
+                i=i+1
+            elif R[j]<L[i]:
+                alist[k]=R[j]
+                j=j+1
+            k=k+1
+        while i < len(L): # means R is finished, j >=len(R)
+            alist[k]=L[i]
+            i=i+1
+            k=k+1
+        while j < len(R):
+            alist[k]=R[j]
+            j=j+1
+            k=k+1
+    return(alist)
