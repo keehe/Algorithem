@@ -1,9 +1,16 @@
 #### MULTIPLICATION ####
+
+#### count number length ####
+cnt1=1
+while x//10>0:
+    x=x//10
+    cnt1=cnt1+1
 #### #### #### #### Karatsuba's Algorithm #### #### #### #### #### 
 1234 * 5678 = (1200+34)(5600*78)
 xy=(10**(n/2)*a + b)*(10**(n/2)*c+d)
   =10**(n)*(a*c) + 10**(n/2)*((a+b)*(c+d) - ac - bd) + bd
-#### #### #### #### #### #### #### #### #### #### #### #### #### 
+#### #### #### #### #### #### #### #### #### #### #### #### #### #### #### 
+ 
 def kara(a1,a2):
     if a1<10 or a2<10:
         return a1*a2
@@ -11,11 +18,34 @@ def kara(a1,a2):
     a1,a2=str(a1),str(a2)    
     mid=max(len(a1),len(a2))//2
     
-    ix,iy=len(a1)-mid,len(a2)-mid
-    a,b=int(a1[:ix]),int(a1[ix:])
-    c,d=int(a2[:iy]),int(a2[iy:])
+    a,b=int(a1[:-mid]),int(a1[-mid:])
+    c,d=int(a2[:-mid]),int(a2[-mid:])
     ac=kara(a,c)
     bd=kara(b,d)
     k=kara(a+b,c+d)
     
     return ac*(10**(2*mid)) + (k-ac-bd)*10**(mid) +bd 
+
+#### #### ####  POINT OUT: why need [-mid:] instead of [mid:] #### #### #### 
+a1=46
+a2=134   #46*134=(40+6)*(130+4) = (40*10**1 + 6)*(13*(10**1) + 4)
+
+a1,a2=str(a1),str(a2)    
+mid=max(len(a1),len(a2))//2   #mid=1
+
+a1=str(a1)
+a2=str(a2)
+a=int(a1[:mid])     #a=4
+b=int(a1[mid:])     #b=6
+c=int(a2[:mid])     #c=1
+d=int(a2[mid:])     #d=34
+
+a0=int(a1[:-mid])   #a0=4
+b0=int(a1[-mid:])   #b0=6
+c0=int(a2[:-mid])   #c0=13
+d0=int(a2[-mid:])   #d0=6
+
+p1=a*c*(10**(mid*2)) + ((a+b)*(c+d)-a*c-d*b)*(10**(mid)) +b*d
+p2=a0*c0*(10**(mid*2)) + ((a0+b0)*(c0+d0)-a0*c0-d0*b0)*(10**(mid)) +b0*d0
+#### #### #### #### #### #### #### #### #### #### #### #### #### #### #### 
+
