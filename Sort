@@ -121,3 +121,67 @@ def mergesort(alist):
             j=j+1
             k=k+1
     return(alist)
+
+#### #### MERGE_SORT and COUNT Split Inversion #### #### ####
+Sort array and count how many inversion happen in the array.
+eg:[1,3,5,2,4,6] has 3 inversions:[3,2],[5,2],[5,4]
+Output: [1,2,3,4,5,6], 3 
+#### #### #### #### #### #### #### #### #### #### #### ####
+def mergesort_inversion2(a):
+    if len(a)==1:
+        return (0,a)    
+    else:
+        L=a[:len(a)//2]
+        R=a[len(a)//2:]
+
+        inv_l,L= mergesort_inversion2(L)
+        inv_r,R=mergesort_inversion2(R)
+
+        i=j=c=0
+        s=[]
+        while i<len(L) and j<len(R):
+            if L[i]<R[j]:
+                s.append(L[i])
+                i+=1
+            else:
+                s.append(R[j])
+                j+=1
+                c=c+len(L[i:])  #reason why use +len(L[i:]), when R[j]<L[i], and R,L already sorted, means R[j] is << L[i,i+1,...] all 
+        while i<len(L):         # numbers in L after i
+            s.append(L[i])
+            i+=1
+        while j<len(R):
+            s.append(R[j])
+            j+=1
+        
+    return(c+inv_l+inv_r,s)
+#### #### #### #### Reason why len(L[i:])
+b=[1,5,6]
+c=[2,3,4]
+
+i=j=v=0
+d=[]
+while i <len(b) and j<len(c):
+    if b[i]<=c[j]:
+        d.append(b[i])
+        i+=1
+    else:
+        d.append(c[j])
+        j+=1
+        v=v+len(b[i:])
+        print(i,j,v,d)
+while i<len(b):
+    d.append(b[i])
+    i+=1
+while j<len(c):
+    d.append(c[j])
+    j+=1
+print(i,j,v,d)
+
+# result
+1 1 2 [1, 2]
+1 2 4 [1, 2, 3]
+1 3 6 [1, 2, 3, 4]
+3 3 6 [1, 2, 3, 4, 5, 6]
+
+###########################
