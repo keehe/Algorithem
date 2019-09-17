@@ -1,0 +1,31 @@
+def partition(array,l):
+    r=len(array)
+    p=array[l]
+    array[0],array[l]=array[l],array[0]  #move pivot to the top
+    i=1
+    for j in range(i,r):
+        if array[j]<p:
+            array[j],array[i]=array[i],array[j]
+            i=i+1
+    array[0],array[i-1]=array[i-1],array[0]  
+    return (array, i-1)
+
+def quicksort_end(array,l=0):
+    n=len(array)
+    if n>1:
+        array,p=partition(array,l)
+        array[:p],lcnt=quicksort4(array[:p],l=len(array[:p])-1)
+        array[p+1:],rcnt=quicksort4(array[p+1:],l=len(array[p+1:])-1)
+        return (array,lcnt+rcnt+n-1)
+    else:
+        return (array,0)
+
+def quicksort_first(array,l=0):
+    n=len(array)
+    if n>1:
+        array,p=partition(array,l)
+        array[:p],lcnt=quicksort4(array[:p])
+        array[p+1:],rcnt=quicksort4(array[p+1:])
+        return (array,lcnt+rcnt+n-1)
+    else:
+        return (array,0)
